@@ -1,0 +1,179 @@
+
+
+<html>
+<head>
+	<title> Curso Javascript </title>
+</head>
+<body>
+    <!-- ~~~~~~~~~~~~~~~~~~ (1) ~~~~~~~~~~~~~~~~~~ -->
+    <div class="exum">
+        <p>1: <br></p>
+        <button onclick="mostrarAlertaClick()"> Me pressione </button>
+        <button onmouseover="mostrarAlertaMouse()"> Passe o mouse em cima </button>
+        <input onkeypress="mostrarAlertaTecla()"/>
+    </div>
+
+    <!-- ~~~~~~~~~~~~~~~~~~ (2) ~~~~~~~~~~~~~~~~~~ -->
+    <div id="exdois">
+        <br><br>
+        <p>2: <br></p>
+        <input type="text" name="dois" id="dois" />
+        <button class="botao">Mostrar texto no alerta</button>
+    </div>
+
+    <!-- ~~~~~~~~~~~~~~~~~~ (3) ~~~~~~~~~~~~~~~~~~ -->
+    <div id="extres">
+        <br><br>
+        <p>3: <br></p>
+        <input id="tres" />
+    </div>
+
+    <!-- ~~~~~~~~~~~~~~~~~~ (4) ~~~~~~~~~~~~~~~~~~ -->
+    <div id="exquatro">
+        <br><br>
+        <p>4: <br></p>
+        <div class="box"></div>
+    </div>
+
+    <!-- ~~~~~~~~~~~~~~~~~~ (EXERCÍCIO 1) ~~~~~~~~~~~~~~~~~~ -->
+    <div>
+        <br><br>
+        <p>EXERCÍCIO 1 E 2: <br></p>
+        <button class="botaoCriarQuadrados">Clique aqui para criar um quadrado</button>
+        <button class="botaoRemoverQuadrados">Clique aqui para remover um quadrado</button>
+        <p>Passe o mouse em cima de um quadrado para muda-lo de cor:</p>
+        <div id="exercicioum"></div>
+    </div>
+    <script>
+    /*~~~~~~~~~~~~~~~~~~ (1) ~~~~~~~~~~~~~~~~~~*/
+    /********** MANIPULAR ELEMENTOS DA DOM (Árvore de elementos html)**********/
+        console.log('********** DOM **********');
+        console.log('Descobrir se um usuário clicou o passou o mouse em um botão');
+        function mostrarAlertaClick() {
+            alert('Botao foi clicado');
+        }
+        function mostrarAlertaMouse() {
+            alert('Passou o mouse no botao');
+        }
+        function mostrarAlertaTecla() {
+            alert('Uma tecla foi apertada');
+        }
+
+    /*~~~~~~~~~~~~~~~~~~ (2) ~~~~~~~~~~~~~~~~~~*/
+    /********** REFERENCIAR ELEMENTOS DA DOM (HTML) ATRAVÉS DO JAVASCRIPT **********/ //Nao apenas disparar elementos do html para o js, ou seja, como buscar informações da arvore de elementos (DOM) atraves do JS 
+    var inputElement = document.getElementById('dois'); //buscar elemento com ID "dois" na DOM atraves da variavel global "document" que referencia a arvore de elementos (DOM)
+        inputElement = document.getElementsByTagName('input'); //retorna um vetor, nesse caso de todos os inputs (se fizer getElementsByTagName('input')[0] retorna o primeiro desse vetor)
+        inputElement = document.getElementsByClassName('dois')[0]; //tambem retorna vetor porque classes nao sao unicas
+        inputElement = document.querySelector('body div#exdois input'); //querySelector percorre a DOM ate encontrar o elemento (body div#app input e o correto porem nao precisa escrever "body" pq eh obvio)
+        // inputElement = document.querySelector('input[name=dois]'); //  colchetes referencia propriedade do elemento, alternativa ao anterior
+        
+    //PRINTA NA TELA O QUE O USUÁRIO DIGITAR NO INPUT    
+    var btnElement = document.querySelector('button.botao');
+    btnElement.onclick = function() {
+        var text = inputElement.value;
+        // alert('Botao Clicado');
+        alert(text);
+    }
+
+    /*~~~~~~~~~~~~~~~~~~ (3) ~~~~~~~~~~~~~~~~~~*/
+    /********** CRIAR ELEMENTO NO JAVASCRIPT **********/
+    // simulando a criacao de <a href="http://google.com">Acesse o link aqui</a>"
+    var linkElement = document.createElement('a');
+    linkElement.setAttribute('href', 'http://google.com'); //adiciona link 
+    var textElement = document.createTextNode('Acesse o link aqui'); // adiciona elemento do texto pro link
+    linkElement.appendChild(textElement); // associa o texto com o link (o text agora é filho do link element)
+    
+    //jogando o "linkElement" no corpo HTML
+    var containerElement = document.querySelector('#extres');
+    containerElement.appendChild(linkElement);
+
+    // podemos acrescentar mais coisas utilizando o setAttribute
+    linkElement.setAttribute('title', 'Site'); //adiciona titulo 
+
+    // podemos criar e remover elementos
+    var textInputElement = document.querySelector('#tres');
+    containerElement.removeChild(textInputElement); //remove input criado no body do ex3, se comentar essa linha o input aparece
+    
+    
+    /*~~~~~~~~~~~~~~~~~~ (4) ~~~~~~~~~~~~~~~~~~*/
+    /********** CONTROLAR ESTILIZAÇÃO CSS PELO JAVASCRIPT **********/
+    var boxElement = document.querySelector('.box');
+        boxElement.style.width = 100;
+        boxElement.style.height = 100;
+        boxElement.style.backgroundColor = '000'; //para escrever background-color, o hifen eh substituido pela proxima letra maiuscula (backgroundColor)
+    
+    
+
+
+
+
+    /*~~~~~~~~~~~~~~~~~~ (EXERCICIO 1) ~~~~~~~~~~~~~~~~~~*/
+    /*Crie um botão que ao ser clicado cria um novo elemento em tela com a forma de um quadrado
+    vermelho com 100px de altura e largura. Sempre que o botão for clicado um novo quadrado deve
+    aparecer na tela.*/
+
+    //Maneira 1: so cria um quadrado
+    // var btnCriarQuadrados = document.querySelector('button.botaoCriarQuadrados');
+    // btnCriarQuadrados.onclick = function () {
+    //     var boxexercicioum = document.querySelector('.exercicioum');
+    //     boxexercicioum.style.width = 100;
+    //     boxexercicioum.style.height = 100;
+    //     boxexercicioum.style.backgroundColor = 'f00';
+    // }
+    function getRandomColor() {
+
+var letters = "0123456789ABCDEF";
+var color = "#";
+
+for (var i = 0; i < 6; i++) {
+color += letters[Math.floor(Math.random() * 16)];
+}
+
+return color;
+}
+
+    //Maneira 2: cria quantos quadrados quiser
+    var btnCriarQuadrados = document.querySelector('button.botaoCriarQuadrados');
+    btnCriarQuadrados.onclick = function () {
+        //cria um elemento "div" e seta uma classe "tudo"
+        var divbox = document.createElement('div');
+        divbox.setAttribute('id', 'exercicioumvdois');
+        var boxexercicioum = document.querySelector('#exercicioum');
+        boxexercicioum.appendChild(divbox);
+        divbox.style.width = 100;
+        divbox.style.height = 100;
+        divbox.style.backgroundColor = 'f00';
+        divbox.onmouseover = function () {
+            var boxMudarDeCor = document.querySelector('#exercicioumvdois');
+            boxMudarDeCor.style.backgroundColor = getRandomColor();
+        }
+    }
+    
+
+    var btnRemoverQuadrados = document.querySelector('button.botaoRemoverQuadrados');
+    btnRemoverQuadrados.onclick = function () {
+        var elementoPraRemover = document.querySelector('#exercicioumvdois');
+        var boxexercicioum = document.querySelector('#exercicioum');
+        boxexercicioum.removeChild(elementoPraRemover);
+    }
+
+
+    var divbox = document.querySelector('#exercicioumvdois');
+    divbox.onmouseover = function () {
+        var boxMudarDeCor = document.querySelector('#exercicioumvdois');
+        boxMudarDeCor.style.backgroundColor = getRandomColor();
+    }
+
+    /*~~~~~~~~~~~~~~~~~~ (EXERCICIO 2) ~~~~~~~~~~~~~~~~~~*/
+    /* Utilizando o resultado do primeiro desafio, toda vez que o usuário passar o mouse por cima de
+    algum quadrado troque sua cor para uma cor aleatória gerada pela função abaixo: */
+    
+        // var newColor = getRandomColor(); // #E943F0
+
+        var quadrado = document.querySelector('#exercicioumvdois'); 
+        quadrado.onmouseover = function changeColor() {
+            var quadrado = document.querySelector('#exercicioumvdois'); 
+            quadrado.style.backgroundColor = getRandomColor();
+        }
+    </script>
+</body>

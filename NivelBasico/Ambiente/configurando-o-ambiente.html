@@ -1,0 +1,190 @@
+<html>
+<head>
+	<title> Curso Javascript </title>
+</head>
+<body>
+	<script>
+        /*  
+        A renderização (carregamento da pagina) e vertical, ou seja, o que vem antes eh carregado antes. 
+        Já que o JS trabalha com os elementos em tela (DOM), precisamos colocar o JS depois da arvore de elementos
+        para que ele possa ser acessado (precisa ja ter sido criado para poder ser carregado e acessado pelo JS) */        
+        
+        /********** VARIAVEIS **********/
+        console.log('********** VARIAVEIS **********'); //aparece no console do inspect (f12) no navegador quando abrimos esse arquivo
+        var nome = "Diego"; // tipagem dinâmica (sem tipagem estatica, toda variavel pode armazenar um valor diferente independente do time do script)
+        var alunos = ['Diego', 'Gabriel', 'Lucas'];
+        var aluno = {
+            nome: alunos[0],
+            idade: 23,
+            peso: 80.5,
+            humano: true
+        };
+        console.log (aluno.humano)
+        console.log (aluno.nome) // exibirá  Diego
+
+        var x = 10, y = 5; // declarar duas variáveis ao mesmo tempo
+        
+        var sexo = 'M';
+        var masculino = (sexo === 'M'); //armazena true ou false
+        console.log(masculino)
+
+
+
+
+
+        /********** FUNÇÕES **********/
+        console.log('********** FUNÇÕES **********');
+        function soma (n1, n2) {
+            // var teste = "1";
+            var teste = 1;
+            var resultado = n1 + n2; // variavel visivel apenas dentro do escopo (funcao soma)
+            if (n1==teste) {  // verifica se o valor das variaveis é igual
+                console.log('Valor das variaveis é igual');
+                // valor diferente: !=
+            }
+            if (n1===teste) {  //verifica também se o tipo das variáveis é igual
+                console.log('Valor e tipo das variaveis é igual');
+                // tipo diferente: !==
+            }
+            return resultado;
+        }
+        var resultado = soma (1,2);
+        console.log('O resultado da soma e: '+resultado);
+
+        function retornaSexo(sexo){
+            switch (sexo) {
+                case 'M':
+                    return  'Masculino';
+                case 'F':
+                    return 'Feminino';
+                default:
+                    return 'Outro';
+            }
+        }
+
+        /* Função */
+        var binario = '1';
+        // var binario = 1;
+        function funcao (binario) {
+            console.log('teste intervalo');
+            if (binario === '1') {
+                console.log('same value & type');
+                return true;
+            } 
+            else if (binario == '1') { 
+                console.log('same value');
+                return true;
+            } else {
+                return false;
+            }
+        }
+        var result = funcao(binario);
+        /* Condição ternária (Função Simplificada) */
+        var retorno = (binario === '1') ? true : false;
+        console.log(retorno);
+
+        /*Intervalos*/
+        // setInterval(funcao, 1000); // repete de 1 em 1 segundo a função
+        // setTimeout(funcao, 5000); // esperou 5 segundos para executar o conteúdo da função
+
+
+
+
+        /********** EXERCICIOS **********/
+        console.log('********** EXERCICIOS **********');
+        console.log('(Exercício 1)');
+        // Crie uma função que dado o objeto a seguir:
+        var endereco = {
+        rua: "Rua dos pinheiros",
+        numero: 1293,
+        bairro: "Centro",
+        cidade: "São Paulo",
+        uf: "SP"
+        };
+        // Retorne o seguinte conteúdo:
+        // O usuário mora em São Paulo / SP, no bairro Centro, na rua "Rua dos Pinheiros" com nº 1293.
+        console.log('O usuário mora em '+ endereco.cidade +' / ' +endereco.uf+ ', no bairro '+endereco.bairro+', na rua '+endereco.rua+' com nº '+endereco.numero);
+        
+        
+        console.log('(Exercício 2)');
+        // Crie uma função que dado um intervalo (entre x e y) exiba todos número pares:
+        function pares(x, y) {
+            var a = x, b = y;
+            console.log('Os numeros pares entre '+a+' e '+b+' sao:');
+            for (var i=x; i<=321; i++) {
+                if (i % 2 == 0 && i<37) {
+                console.log(i);
+                }
+            }
+        }
+        pares(32, 321);
+
+
+        console.log('(Exercício 3)');
+        // Escreva uma função que verifique se o vetor de habilidades passado possui a habilidade "Javascript" e retorna um booleano true/false caso exista ou não.
+        // Dica: para verificar se um vetor contém um valor, utilize o método indexOf (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)
+        function temHabilidade(skills) {
+            var condicao = false;
+            //indexOf(elementoDePesquisa, [pontoInicial = 0]) retorna a posicao do elemento procurado ou -1 se nao encontrar
+            if (skills.indexOf("Javascript") != -1) {
+               condicao = true;
+            }
+            console.log(condicao);
+        }
+        var skills = ["Javascript", "ReactJS", "React Native"];
+        temHabilidade(skills); // true ou false
+
+
+        console.log('(Exercício 4)');
+        // Escreva uma função que dado um total de anos de estudo retorna o quão experiente o usuário é:
+        // De 0-1 ano: Iniciante
+        // De 1-3 anos: Intermediário
+        // De 3-6 anos: Avançado
+        // De 7 acima: Jedi Master
+        function experiencia(anos) {
+            if (anos >= 7) { console.log(anos); }
+            switch(true) { //as funcoes de verificacao retornam true ou false por isso eh o booleano que deve ser verificado
+                case (anos < 1):
+                    return 'Iniciante';
+                case (anos >= 1 && anos < 3):
+                    return 'Intermediário';
+                case (anos >= 3 && anos < 6):
+                    return 'Avançado';
+                case (anos >= 7):
+                    return 'Jedi Master';
+                default:
+                    return 'Erro';
+            }
+        }
+        var anosEstudo = 7;
+        console.log(experiencia(anosEstudo));
+
+
+        console.log('(Exercício 5)');
+        //Escreva uma função que produza o seguinte resultado:
+        //O Diego possui as habilidades: Javascript, ReactJS, Redux
+        //O Gabriel possui as habilidades: VueJS, Ruby on Rails, Elixir
+        var usuarios = [
+        {
+        nome: "Diego",
+        habilidades: ["Javascript", "ReactJS", "Redux"]
+        },
+        {
+        nome: "Gabriel",
+        habilidades: ["VueJS", "Ruby on Rails", "Elixir"]
+        }
+        ];
+
+        function verificaHabilidades (usuarios) {
+        let iterable = usuarios;
+            for (let value of iterable) { // (let se for modificar a variavel dentro do bloco e const se nao for)
+                console.log('O '+value.nome+' possui as habilidades: '+value.habilidades.join([separador = ', ']));
+            }
+        }
+        //Dica: Para percorrer um vetor você deve utilizar a sintaxe for...of e para unir valores de um array com um separador utilize o join.
+        //for...of: A cada iteração, um valor de uma propriedade diferente é atribuido à variável. (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/for...of)
+        //join: junta todos os elementos de uma array (https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/join)
+        verificaHabilidades(usuarios);
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <title>EXERCICIO AJAX</title>
+    </head>
+    <body>
+        <script>
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIO AJAX PURO) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            
+            /* Tudo isso foi usado no exercicio abaixo de PROMISSES 
+
+
+            //Requisição assíncrona ao back-end sem precisarmos recarregar a página para trazermos informações do servidor.
+            //classe que da acesso a funcionalidade do AJAX
+            var xhr = new XMLHttpRequest() 
+            // Metodo e url do servidor que buscaremos os dados
+            xhr.open('GET', 'http://api.github.com/users/jubrito'); 
+            xhr.send(null);
+            
+            // ~ Podemos visualizar na aba Network > Preview  que a requisição foi feita ~ 
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    //JSON.parse converte o JSON recebido
+                    console.log(JSON.parse(xhr.responseText));
+                }
+            }
+            */
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIO PROMISSES) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            //Códigos que não interferem na linha do tempo do código JavaScript 
+            //Funções que devolvem valor de sucesso ou erro
+            var minhaPromise = function() {
+                //resolve: funcao quando o resultado for de sucesso
+                //reject: funcao quando o resultado nao for de sucesso
+                return new Promise(function(resolve, reject) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', 'http://api.github.com/users/jubrito');
+                    xhr.send(null);
+
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                            //codigo de sucesso da requisicao
+                            if (xhr.status === 200) {
+                                resolve(JSON.parse(xhr.responseText));
+                            } else {
+                                reject('Erro na requisicao')
+                            }
+                        }
+                    }
+                });
+            }
+
+            minhaPromise()
+                // Resolve 
+                .then(function(response) {
+                    console.log(response);
+                })
+                // Reject
+                .catch(function(error) {
+                    console.log(error);
+                });
+        </script>
+    </body>
+</html>

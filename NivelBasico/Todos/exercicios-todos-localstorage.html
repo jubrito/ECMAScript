@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>EXERCICIOS TODOS</title>
+    </head>
+    <body>
+
+        <p>EXERCÍCIO TODOS:</p>
+        <div class="todos">
+            <input name="inputTodo" placeholder="Novo item todo" /><button class="buttonTodo">Inserir</button>
+            <ul></ul>
+        </div>
+        <script>
+        /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIO TODOS) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            /*Crie uma TodoList com as funcionalidades de acrescentar e excluir itens*/
+            var listElementTodo = document.querySelector('.todos ul');
+            var inputElementTodo = document.querySelector('.todos input');
+            var buttonElementTodo = document.querySelector('.todos button');
+
+            //Não usamos mais desta forma pois estamos usando armazenamento local
+            // var todos = [
+            //     'Item1',
+            //     'Item2',
+            //     'Item3'
+            // ];
+
+            /*Se não tiver nada dentro do local storage esse valor nao sera valido, por isso
+            definimos um valor default como array vazio []*/
+            var todos = JSON.parse(localStorage.getItem('list_todos') || []);
+
+            function renderTodos (){
+                //remove todo o conteúdo que tiver no listElementTodo
+                listElementTodo.innerHTML = '';
+                for (todo of todos) {
+                    //criando item
+                    var todoElement = document.createElement('li');
+                    //criando o texto do item
+                    var todoText = document.createTextNode(todo);
+                    //atribuindo um texto a ele
+                    todoElement.appendChild(todoText);
+                    //criando um link 
+                    var linkElement = document.createElement('a');
+                    //setando a url do link
+                    linkElement.setAttribute('href', '#');
+                    //criando texto do link
+                    var linkText = document.createTextNode('Excluir');
+                    //relacionando o texto do link com o link
+                    linkElement.appendChild(linkText);
+                    //acrescentamos o botao excluir em cada item
+                    listElementTodo.appendChild(linkElement);
+                    //variavel posicao que ajudara a excluirmos o item
+                    var pos = todos.indexOf(todo);
+                    //quando clicarmos no "excluir", chama metodo removeTodo
+                    linkElement.setAttribute('onclick', 'removeTodo('+ pos +')');
+                    //colocamos o item na lista
+                    listElementTodo.appendChild(todoElement);
+                }
+            }
+            renderTodos();
+
+            function addTodo() {
+                var inputText = inputElementTodo.value;
+                //adiciona input no arranjo
+                todos.push(inputText);       
+                //zera o valor do input
+                inputElementTodo.value = ''; 
+                renderTodos();
+                saveToLocalStorage();
+            }
+
+            buttonElementTodo.onclick = addTodo; 
+            
+            function removeTodo(pos) {
+                //remove uma quantidade de itens do array dependendo do que passarmos
+                todos.splice(pos, 1); // a partir da posicao "pos", remova o proximo item (1 item)
+                renderTodos();
+                saveToLocalStorage();
+            }
+            
+            function saveToLocalStorage() {
+            /*
+            - As únicas funções que alteram a lista são a de adicionar e a de excluir por isso chamaremos 
+              esta funcao saveToLocalStorage no metodo de criar e excluir
+              Precisamos converter o array de todos em uma estrutura que permita acessar e gravar um vetor
+            - Visto que o localStorage.setItem(chave, valor) apenas aceita o valor como uma String
+              JSON (JavaScript Object Notation): estrutura que parece um objeto porém é uma string 
+              JSON.stringify(vetor) converte um vetor em uma string*/
+                localStorage.setItem('list_todos', JSON.stringify(todos));
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <title>Exercicios DOM</title>
+    </head>
+    <body>
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIOS 1 e 2) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <div>
+            <p>EXERCÍCIO 1 E 2:</p>
+            <button class="botaoCriarQuadrados">Criar quadrado</button>
+            <button class="botaoRemoverQuadrado">Remover quadrado</button>
+            <div class="quadrados"></div>
+            <br>
+        </div>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIO 3) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <p>EXERCÍCIO 3:</p>
+        <input name="inputItem" placeholder="Novo item" /><button class="inserirNovoElemento">Inserir</button>
+        <div class="lista"></div>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIO EXTRA:) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <p>EXERCICIO EXTRA:</p>
+        <div class="criandoLink"></div>
+        <script>
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIOS EXTRA) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            // Crie um link utilizando JavaScript
+            var linkElement = document.createElement('a');
+            linkElement.setAttribute('href', 'http://teste.com.br');
+            linkElement.setAttribute('title', 'Titulo');
+            var textElement = document.createTextNode('Acessar link');
+            linkElement.appendChild(textElement);
+            document.querySelector('div.criandoLink').appendChild(linkElement);
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIOS 1 e 2) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            /* Crie um botão que ao ser clicado cria um novo elemento em tela com a forma de um quadrado
+            vermelho com 100px de altura e largura. Sempre que o botão for clicado um novo quadrado deve
+            aparecer na tela */
+            var btnCriaQuadrados = document.querySelector('button.botaoCriarQuadrados');
+            btnCriaQuadrados.onclick = function () {
+                //cria um elemento "div" e atribui a ele a classe "square"
+                var novoQuadrado = document.createElement('div');
+                novoQuadrado.setAttribute('class', 'square');
+                var quadrados = document.querySelector('div.quadrados');
+                quadrados.appendChild(novoQuadrado);
+                novoQuadrado.style.width = 100; 
+                novoQuadrado.style.height = 100;
+                novoQuadrado.style.backgroundColor = '000';
+                novoQuadrado.onmouseover = function () {
+                    var quadrado = document.querySelector('div.square');
+                    quadrado.style.backgroundColor = getRandomColor(); 
+                }
+            }
+
+            var btnRemoverQuadrado = document.querySelector('button.botaoRemoverQuadrado');
+            btnRemoverQuadrado.onclick = function () {
+                    var quadrados = document.querySelector('div.quadrados');
+                    var remover = document.querySelector('div.square');
+                    quadrados.removeChild(remover);
+                }
+
+            /*Utilizando o resultado do primeiro desafio, toda vez que o usuário passar o mouse por cima de
+            algum quadrado troque sua cor para uma cor aleatória gerada pela função abaixo:*/
+            function getRandomColor() {
+            var letters = "0123456789ABCDEF";
+            var color = "#";
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ (EXERCICIO 3) ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            /*A partir do seguinte vetor:
+            Preencha uma lista (<ul>) no HTML com os itens da seguinte forma:
+            ● Diego
+            ● Gabriel
+            ● Lucas 
+            */ 
+
+            var nomes = ["Diego", "Gabriel", "Lucas"];
+            function criarLista (nomes) {
+                var ul = document.createElement('ul');
+                ul.setAttribute('class', 'listaUL');
+                document.querySelector('div.lista').appendChild(ul);
+                for (nome of nomes) {
+                    var item = nome; 
+                    var li = document.createElement('li');
+                    li.innerHTML = li.innerHTML + item;
+                    ul.appendChild(li);
+                }
+            }
+            var ul = criarLista(nomes);
+            /*Seguindo o resultado do exercício anterior adicione um input em tela e um botão como a seguir:
+            <input type="text" name="nome">
+            <button onClick="adicionar()">Adicionar</button>
+            Ao clicar no botão, a função adicionar() deve ser disparada adicionando um novo item a lista de
+            nomes baseado no nome preenchido no input e renderizando o novo item em tela juntos aos
+            demais itens anteriores. Além disso, o conteúdo do input deve ser apagado após o clique.*/
+            var btnInserirNovoElemento = document.querySelector('button.inserirNovoElemento');
+            btnInserirNovoElemento.onclick = function () {
+                var ul = document.querySelector('.listaUL'); //poderia usar ('.lista ul'), pegando a ul da classe lista
+                var li = document.createElement('li');
+                var inputText = document.querySelector('input[name=inputItem]').value;
+                li.innerHTML = li.innerHTML + inputText;
+                /* como alternativa a linha anterior, poderia ser feito: 
+
+                    liText = document.createTextNode(inputText);
+                    li.appendChild(liText);
+                */
+                ul.appendChild(li);
+            }
+        </script>
+    </body>
+</html>
