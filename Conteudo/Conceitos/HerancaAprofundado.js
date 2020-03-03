@@ -1,0 +1,1 @@
+// https://codeshare.com.br/implementando-heranca-em-javascript/
